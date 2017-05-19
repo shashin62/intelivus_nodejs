@@ -1,0 +1,15 @@
+{
+  "name": "tax-site-scrapper",
+  "version": "1.0.0",
+  "description": "Fetch and create matching report",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ranjeet Rajput",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.4.0",
+    "json2csv": "^3.7.3"
+  }
+}

@@ -16,6 +16,8 @@ function TaxSiteTX(pool, logger) {
     this.processStatus = 1; //0: Running 1: Completed
     this.statusCount = 0;
     this.proid = 0;
+    this.csvFields = ['search_term', 'ap1', 'desg1', 'ap2', 'desg2', 'ap3', 'desg3', 'sso_link', 'company', 'caddress', 'match', 'fetched_date'];
+    this.csvFieldNames = ['Search Term', "AP Name 1", "Designation", "AP Name 2", "Designation", "AP Name 3", "Designation", "SSO Link", "SOS Company Name", "SOS Address", "AP Name Match", "Fetched Date"];
 }
 
 var obj = TaxSiteTX.prototype;

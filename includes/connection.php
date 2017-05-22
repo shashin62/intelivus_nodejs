@@ -1,9 +1,9 @@
 <?php
 $db_username = "root";// "intelivu_dauser";
-$db_password = ""; // "uSu))dpg5Q~V";
+$db_password = "root123"; // "uSu))dpg5Q~V";
 $db_name = "intelivu_dawork";
 $db_host = "localhost";
-$sitepath= "http://localhost/Shashin/Tax%20Site%20Scrapping/source/"; //"http://intelivus.com/dawork/";
+$sitepath= "http://107.170.73.31/"; //"http://intelivus.com/dawork/";
 $title="Personalization Initative" ;
 set_time_limit(0);
 ini_set('display_errors', 0); 

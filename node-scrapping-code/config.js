@@ -3,7 +3,7 @@ module.exports = {
     host: 'localhost',
     name: 'intelivu_dawork',
     user: 'root',
-    password: '',
+    password: 'root123',
     connections: 100
   },
   logger: {

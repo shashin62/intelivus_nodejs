@@ -198,7 +198,7 @@ obj.createMatchingFile = function () {
                     var csv = json2csv({data: data, fields: that.csvFields, fieldNames: that.csvFieldNames});
                     var time = (new Date()).getTime();
                     var filename = 'FL_' + time + '.csv';
-                    fs.writeFile( filename, csv, function (err) {
+                    fs.writeFile( 'matching_files/'+filename, csv, function (err) {
                         if (err) {
                             that.logger.error('file creation error');
                             that.logger.error(err);
@@ -211,21 +211,22 @@ obj.createMatchingFile = function () {
                             if (err) {
                                 that.logger.error('connection error');
                                 that.logger.error(err);
-                                return;
-                            }
-
-                            // Use the connection 
-                            connection.query('UPDATE project_data SET process_status = ?, data_filename = ? WHERE cid = ?', [1, filename, that.proid], function (error, results, fields) {
                                 
-                                // And done with the connection. 
-                                connection.release();
-                                if (error){
-                                    that.logger.error('update error');
-                                    that.logger.error(err);
-                                } else{
-                                    console.log('** Project updated **');
-                                }
-                            });
+                            } else {
+
+                                // Use the connection 
+                                connection.query('UPDATE project_data SET process_status = ?, data_filename = ? WHERE cid = ?', [1, filename, that.proid], function (error, results, fields) {
+
+                                    // And done with the connection. 
+                                    connection.release();
+                                    if (error){
+                                        that.logger.error('update error');
+                                        that.logger.error(err);
+                                    } else{
+                                        console.log('** Project updated **');
+                                    }
+                                });
+                            }
 
                         });
                     });
@@ -481,12 +482,12 @@ obj.insertPageDetailsForFL = function (pageURL, retry_count, searchTerm) {
 
             //console.log(data['document_number']);
             if (data['document_number']) {
-                var where = {document_number: data['document_number']};
+                var where = [ data['document_number'],that.proid];
             } else {
-                var where = {document_number: 0};
+                var where = [ 0,that.proid];
             }
             //console.log(where);
-            connection.query('select count(*) as count FROM site_scrap_data WHERE  ? ', where, function (err, result) {
+            connection.query('select count(*) as count FROM site_scrap_data WHERE  document_number = ? and search_state = "FL" and search_proid = ? ', where, function (err, result) {
 
                 if (err) {
                     that.logger.error('exist error');

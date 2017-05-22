@@ -7,7 +7,7 @@ var express = require('express');
 var app = express();
 var config = require('./config');
 var TaxSiteFL = require('./fl');
-var TaxSiteTX = require('./TX');
+var TaxSiteTX = require('./tx');
 
 // Logger object
 var logger = new winston.Logger({

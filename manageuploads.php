@@ -29,6 +29,7 @@ if($_SESSION["sadmin_username"]!="")
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="refresh" content="90">
 <title><?php echo $title; ?></title>
 <?php include('includes/headercss.php'); ?>
 <?php include('includes/headerscripts.php'); ?>
@@ -178,6 +179,11 @@ function openAttach(url)
 					  }else{
 						  $act = '<span style="background:#EA4335;color:#FFFFFF; padding:5px 15px;">Completed</span>';
 					  }
+                                          
+                                          if($row["process_status"]==1){
+                                              $act = "<a href='node-scrapping-code/matching_files/".$row["data_filename"]."' target='_blank'><span style='background:#EA4335;color:#FFFFFF; padding:5px 15px;'>Completed</span></a>";
+                                          }                                          
+                                          
 					$tcname="";
 					$onhold = $row["records"] - $row["rsave"] -  $row["submitqa"] -  $row["complete"] - $row["reject"];
 					

@@ -77,12 +77,18 @@ if($_SESSION["sadmin_username"]!="")
 
 			 $Reader = new SpreadsheetReader($newname_30);
 			 $x=0;
+                         $isFirst = 1;
 			 $rcal = 0;
 			 foreach ($Reader as $Row)
 			 {
 				 $x++;
 				 if($x<2){}
 				 else{
+                                     
+                                     if($isFirst==1){
+                                         $state =  StringRepair($Row[5]);
+                                         $isFirst = 0;
+                                     }
 					 $rcal++;
 						$serial = StringRepair($Row[0]);
 						$dba_name = StringRepair($Row[1]);
@@ -106,6 +112,20 @@ if($_SESSION["sadmin_username"]!="")
 				$x = $x - 1;
 				$qupdate = "update project_data set `records`='".$x."',`onhold`='".$x."' where cid=".$current_id;
 				mysqli_query($db,$qupdate) or die ("cannot update the record count..");
+                                
+                                
+                                //call matching API
+                                //next example will insert new conversation
+                                $service_url = 'http://localhost:8081/start-scrap?proid='.$current_id.'&state='.$state;
+                                $curl = curl_init($service_url);
+                                curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+                                $curl_response = curl_exec($curl);
+                                if ($curl_response === false) {
+                                    $info = curl_getinfo($curl);
+                                    curl_close($curl);
+                                    die('error occured during curl exec. Additioanl info: ' . var_export($info));
+                                }
+                                curl_close($curl);
 
 	         //throws a message if data successfully imported to mysql database from excel file
 	         $_SESSION["sadmin_changeImage_Delete"] = "Uploaded Successfully.";

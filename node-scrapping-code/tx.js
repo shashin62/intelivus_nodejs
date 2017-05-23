@@ -203,7 +203,7 @@ obj.searchTerms = function (data, resultCallback) {
                 var r = searchResults[0];
                 //console.log(searchResults);
                 //console.log(r);
-                if (r) {
+                if (r.item) {
                     //searchResults.forEach(function (r) {
                     //console.log(r);
                     var resultItem = r.item;

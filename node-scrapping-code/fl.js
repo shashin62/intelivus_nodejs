@@ -26,6 +26,7 @@ var obj = TaxSiteFL.prototype;
 obj.createSearchTermForFL = function (proid) {
     var that = this;
     that.proid = proid;
+    that.createMatchingFile();
     that.pool.getConnection(function (err, connection) {
 
         if (err) {
@@ -183,6 +184,8 @@ obj.createMatchingFile = function () {
         }
 
         // Use the connection 
+        
+        console.log('SELECT * FROM data where proid=' + that.proid + ' and b_state="FL"');
         connection.query('SELECT * FROM data where proid=' + that.proid + ' and b_state="FL" ', function (err, result) {
             // And done with the connection. 
             connection.release();
@@ -246,6 +249,7 @@ obj.searchTerms = function (data, resultCallback) {
             that.logger.error(err);
         }
 
+        console.log('select * FROM site_scrap_data WHERE search_proid=' + that.proid + ' and search_state="FL" ');
         connection.query('select * FROM site_scrap_data WHERE search_proid=' + that.proid + ' and search_state="FL" ', function (err, result) {
             connection.release();
             if (err) {
@@ -263,7 +267,7 @@ obj.searchTerms = function (data, resultCallback) {
                 var searchResults = fuse.search(item['legal_name']);
                 var r = searchResults[0];
                 //console.log(searchResults);
-                //console.log(r);
+                console.log(r);
                 if (r) {
 
                     if (r.item) {

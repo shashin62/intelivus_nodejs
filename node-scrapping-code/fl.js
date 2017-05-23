@@ -198,7 +198,7 @@ obj.createMatchingFile = function () {
                     var csv = json2csv({data: data, fields: that.csvFields, fieldNames: that.csvFieldNames});
                     var time = (new Date()).getTime();
                     var filename = 'FL_' + time + '.csv';
-                    fs.writeFile( 'matching_files/'+filename, csv, function (err) {
+                    fs.writeFile('matching_files/' + filename, csv, function (err) {
                         if (err) {
                             that.logger.error('file creation error');
                             that.logger.error(err);
@@ -211,7 +211,7 @@ obj.createMatchingFile = function () {
                             if (err) {
                                 that.logger.error('connection error');
                                 that.logger.error(err);
-                                
+
                             } else {
 
                                 // Use the connection 
@@ -219,10 +219,10 @@ obj.createMatchingFile = function () {
 
                                     // And done with the connection. 
                                     connection.release();
-                                    if (error){
+                                    if (error) {
                                         that.logger.error('update error');
                                         that.logger.error(err);
-                                    } else{
+                                    } else {
                                         console.log('** Project updated **');
                                     }
                                 });
@@ -323,6 +323,7 @@ obj.searchTerms = function (data, resultCallback) {
 obj.insertPageDetailsForFL = function (pageURL, retry_count, searchTerm) {
     var that = this;
     that.processStatus = 0;
+    console.log('Flag Set');
     request(pageURL, function (error, response, responseHtml) {
 
         if (error) {
@@ -333,9 +334,10 @@ obj.insertPageDetailsForFL = function (pageURL, retry_count, searchTerm) {
             if (retry_count < 3) {
                 that.insertPageDetailsForFL(pageURL, retry_count, searchTerm);
             } else {
-                that.logger.error('Failed to fetch details page: ' + pageURL);
-                that.logger.error(error);
                 that.processStatus = 1;
+                console.log('Flag reset');
+                that.logger.error('Failed to fetch details page: ' + pageURL);
+                that.logger.error(error); 
             }
             return;
         }
@@ -473,52 +475,56 @@ obj.insertPageDetailsForFL = function (pageURL, retry_count, searchTerm) {
         that.pool.getConnection(function (err, connection) {
 
             if (err) {
+                that.processStatus = 1;
+                console.log('Flag reset');
                 that.logger.error('connection error');
                 that.logger.error(data);
                 that.logger.error(err);
-                that.processStatus = 1;
-                return;
             }
 
             //console.log(data['document_number']);
             if (data['document_number']) {
-                var where = [ data['document_number'],that.proid];
+                var where = [data['document_number'], that.proid];
             } else {
-                var where = [ 0,that.proid];
+                var where = [0, that.proid];
             }
             //console.log(where);
             connection.query('select count(*) as count FROM site_scrap_data WHERE  document_number = ? and search_state = "FL" and search_proid = ? ', where, function (err, result) {
 
                 if (err) {
+                    that.processStatus = 1;
+                    console.log('Flag reset');
                     that.logger.error('exist error');
                     that.logger.error(err);
-                    that.processStatus = 1;
-                    return;
-                }
-                //console.log(result);
-                //console.log(data['document_number']+' '+result[0]['count']);
-
-                if (result[0]['count'] < 1) {
-                    // Use the connection 
-                    connection.query('INSERT INTO site_scrap_data SET ?', data, function (err, result) {
-                        // And done with the connection. 
-                        connection.release();
-
-                        if (err) {
-                            that.logger.error('insert row error');
-                            that.logger.error(data);
-                            that.logger.error(err);
-                            that.processStatus = 1;
-                            return;
-                        } else {
-                            // console.log(result);
-                        }
-
-                    });
                 } else {
-                    connection.release();
-                    that.processStatus = 1;
-                    //console.log('record exist');
+                    //console.log(result);
+                    //console.log(data['document_number']+' '+result[0]['count']);
+
+                    if (result[0]['count'] < 1) {
+                        // Use the connection 
+                        connection.query('INSERT INTO site_scrap_data SET ?', data, function (err, result) {
+                            // And done with the connection. 
+                            connection.release();
+
+                            if (err) {
+                                that.processStatus = 1;
+                                console.log('Flag reset');
+                                that.logger.error('insert row error');
+                                that.logger.error(data);
+                                that.logger.error(err);
+                            } else {
+                                // console.log(result);
+                                that.processStatus = 1;
+                                console.log('Flag reset');
+                            }
+
+                        });
+                    } else {
+                        connection.release();
+                        that.processStatus = 1;
+                        console.log('Flag reset');
+                        //console.log('record exist');
+                    }
                 }
 
             });

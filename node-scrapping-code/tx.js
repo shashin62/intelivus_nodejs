@@ -139,7 +139,7 @@ obj.createMatchingFile = function () {
                     var csv = json2csv({data: data, fields: that.csvFields, fieldNames: that.csvFieldNames});
                     var time = (new Date()).getTime();
                     var filename = 'TX_' + time + '.csv';
-                    fs.writeFile('matching_files/'+filename, csv, function (err) {
+                    fs.writeFile('matching_files/' + filename, csv, function (err) {
                         if (err) {
                             that.logger.error('file creation error');
                             that.logger.error(err);
@@ -203,41 +203,48 @@ obj.searchTerms = function (data, resultCallback) {
                 var r = searchResults[0];
                 //console.log(searchResults);
                 //console.log(r);
-                if (r.item) {
-                    //searchResults.forEach(function (r) {
-                    //console.log(r);
-                    var resultItem = r.item;
-                    var ap2 = '';
-                    var desg2 = '';
-                    var ap3 = '';
-                    var desg3 = '';
+                if (r) {
 
-                    if (resultItem.authorized_persons != null && resultItem.authorized_persons != 'null') {
-                        var pd = JSON.parse(resultItem.authorized_persons);
-                        if (pd[0]) {
-                            var ap2 = pd[0]['name'];
-                            var desg2 = pd[0]['title'];
+                    if (r.item) {
+                        //searchResults.forEach(function (r) {
+                        //console.log(r);
+                        var resultItem = r.item;
+                        var ap2 = '';
+                        var desg2 = '';
+                        var ap3 = '';
+                        var desg3 = '';
+
+                        if (resultItem.authorized_persons != null && resultItem.authorized_persons != 'null') {
+                            var pd = JSON.parse(resultItem.authorized_persons);
+                            if (pd[0]) {
+                                var ap2 = pd[0]['name'];
+                                var desg2 = pd[0]['title'];
+                            }
+                            if (pd[1]) {
+                                var ap3 = pd[1]['name'];
+                                var desg3 = pd[1]['title'];
+                            }
+                        } else if (resultItem.officer_detail != null && resultItem.officer_detail != 'null') {
+                            var pd = JSON.parse(resultItem.officer_detail);
+                            var pd = JSON.parse(resultItem.officer_detail);
+                            console.log(pd);
+                            if (pd[0]) {
+                                var ap2 = pd[0]['agentName'];
+                                var desg2 = pd[0]['agentTitle'];
+                            }
+                            if (pd[1]) {
+                                var ap3 = pd[1]['agentName'];
+                                var desg3 = pd[1]['agentTitle'];
+                            }
                         }
-                        if (pd[1]) {
-                            var ap3 = pd[1]['name'];
-                            var desg3 = pd[1]['title'];
-                        }
-                    } else if (resultItem.officer_detail != null && resultItem.officer_detail != 'null') {
-                        var pd = JSON.parse(resultItem.officer_detail);
-                        var pd = JSON.parse(resultItem.officer_detail);
-                        console.log(pd);
-                        if (pd[0]) {
-                            var ap2 = pd[0]['agentName'];
-                            var desg2 = pd[0]['agentTitle'];
-                        }
-                        if (pd[1]) {
-                            var ap3 = pd[1]['agentName'];
-                            var desg3 = pd[1]['agentTitle'];
-                        }
+                        var temp = {search_term: item['legal_name'], ap1: resultItem.registered_agent_name, desg1: "REGISTERED AGENT", ap2: ap2, desg2: desg2, ap3: ap3, desg3: desg3, sso_link: resultItem.sso_link, company: resultItem.title, caddress: resultItem.principal_address, match: 'YES', fetched_date: resultItem.created_at};
+                        //console.log(temp);
+                        searchdata.push(temp);
+                    } else {
+                        console.log('not found');
+                        var temp = {search_term: item['legal_name'], ap1: '', desg1: '', ap2: '', desg2: '', ap3: '', desg3: '', sso_link: '', company: '', caddress: '', match: 'NO', fetched_date: ''};
+                        searchdata.push(temp);
                     }
-                    var temp = {search_term: item['legal_name'], ap1: resultItem.registered_agent_name, desg1: "REGISTERED AGENT", ap2: ap2, desg2: desg2, ap3: ap3, desg3: desg3, sso_link: resultItem.sso_link, company: resultItem.title, caddress: resultItem.principal_address, match: 'YES', fetched_date: resultItem.created_at};
-                    //console.log(temp);
-                    searchdata.push(temp);
                 } else {
                     console.log('not found');
                     var temp = {search_term: item['legal_name'], ap1: '', desg1: '', ap2: '', desg2: '', ap3: '', desg3: '', sso_link: '', company: '', caddress: '', match: 'NO', fetched_date: ''};
@@ -370,9 +377,9 @@ obj.insertInfoForTX = function (result) {
 
         //console.log(data['document_number']);
         if (result.taxpayerId) {
-            var where = [ result.taxpayerId,that.proid];
+            var where = [result.taxpayerId, that.proid];
         } else {
-            var where = [ 0,that.proid];
+            var where = [0, that.proid];
         }
         //console.log(where);
         connection.query('select count(*) as count FROM site_scrap_data WHERE  document_number = ? and search_state = "FL" and search_proid = ? ', where, function (err, r) {

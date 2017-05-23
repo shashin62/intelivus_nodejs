@@ -206,7 +206,7 @@ obj.searchTerms = function (data, resultCallback) {
                 if (r) {
                     //searchResults.forEach(function (r) {
                     //console.log(r);
-                    var resultItem = r.item;
+                    var resultItem = r;
                     var ap2 = '';
                     var desg2 = '';
                     var ap3 = '';

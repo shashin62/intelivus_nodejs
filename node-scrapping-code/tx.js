@@ -251,7 +251,7 @@ obj.searchTerms = function (data, resultCallback) {
                                 connection.release();
                                 if (error) {
                                     that.logger.error('update error');
-                                    that.logger.error(err);
+                                    that.logger.error(error);
                                 } else {
                                     console.log('** updated **');
                                 }
@@ -277,7 +277,7 @@ obj.searchTerms = function (data, resultCallback) {
                                 connection.release();
                                 if (error) {
                                     that.logger.error('update error');
-                                    that.logger.error(err);
+                                    that.logger.error(error);
                                 } else {
                                     console.log('** updated **');
                                 }

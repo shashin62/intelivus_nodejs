@@ -25,8 +25,6 @@ var obj = TaxSiteTX.prototype;
 obj.createSearchTermForTX = function (proid) {
     var that = this;
     that.proid = proid;
-    that.createMatchingFile();
-    return;
     that.pool.getConnection(function (err, connection) {
 
         if (err) {

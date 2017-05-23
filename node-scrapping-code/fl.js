@@ -265,38 +265,45 @@ obj.searchTerms = function (data, resultCallback) {
                 //console.log(searchResults);
                 //console.log(r);
                 if (r) {
-                    //searchResults.forEach(function (r) {
-                    //console.log(r);
-                    var resultItem = r.item;
-                    var ap2 = '';
-                    var desg2 = '';
-                    var ap3 = '';
-                    var desg3 = '';
 
-                    if (resultItem.authorized_persons != null) {
-                        var pd = JSON.parse(resultItem.authorized_persons);
-                        if (pd[0]) {
-                            var ap2 = pd[0]['name'];
-                            var desg2 = pd[0]['title'];
+                    if (r.item) {
+                        //searchResults.forEach(function (r) {
+                        //console.log(r);
+                        var resultItem = r.item;
+                        var ap2 = '';
+                        var desg2 = '';
+                        var ap3 = '';
+                        var desg3 = '';
+
+                        if (resultItem.authorized_persons != null) {
+                            var pd = JSON.parse(resultItem.authorized_persons);
+                            if (pd[0]) {
+                                var ap2 = pd[0]['name'];
+                                var desg2 = pd[0]['title'];
+                            }
+                            if (pd[1]) {
+                                var ap3 = pd[1]['name'];
+                                var desg3 = pd[1]['title'];
+                            }
+                        } else if (resultItem.officer_detail != null) {
+                            var pd = JSON.parse(resultItem.officer_detail);
+                            if (pd[0]) {
+                                var ap2 = pd[0]['name'];
+                                var desg2 = pd[0]['title'];
+                            }
+                            if (pd[1]) {
+                                var ap3 = pd[1]['name'];
+                                var desg3 = pd[1]['title'];
+                            }
                         }
-                        if (pd[1]) {
-                            var ap3 = pd[1]['name'];
-                            var desg3 = pd[1]['title'];
-                        }
-                    } else if (resultItem.officer_detail != null) {
-                        var pd = JSON.parse(resultItem.officer_detail);
-                        if (pd[0]) {
-                            var ap2 = pd[0]['name'];
-                            var desg2 = pd[0]['title'];
-                        }
-                        if (pd[1]) {
-                            var ap3 = pd[1]['name'];
-                            var desg3 = pd[1]['title'];
-                        }
+                        var temp = {search_term: item['legal_name'], ap1: resultItem.registered_agent_name, desg1: "REGISTERED AGENT", ap2: ap2, desg2: desg2, ap3: ap3, desg3: desg3, sso_link: resultItem.sso_link, company: resultItem.title, caddress: resultItem.principal_address, match: 'YES', fetched_date: resultItem.created_at};
+                        //console.log(temp);
+                        searchdata.push(temp);
+                    } else {
+                        console.log('not found');
+                        var temp = {search_term: item['legal_name'], ap1: '', desg1: '', ap2: '', desg2: '', ap3: '', desg3: '', sso_link: '', company: '', caddress: '', match: 'NO', fetched_date: ''};
+                        searchdata.push(temp);
                     }
-                    var temp = {search_term: item['legal_name'], ap1: resultItem.registered_agent_name, desg1: "REGISTERED AGENT", ap2: ap2, desg2: desg2, ap3: ap3, desg3: desg3, sso_link: resultItem.sso_link, company: resultItem.title, caddress: resultItem.principal_address, match: 'YES', fetched_date: resultItem.created_at};
-                    //console.log(temp);
-                    searchdata.push(temp);
                 } else {
                     console.log('not found');
                     var temp = {search_term: item['legal_name'], ap1: '', desg1: '', ap2: '', desg2: '', ap3: '', desg3: '', sso_link: '', company: '', caddress: '', match: 'NO', fetched_date: ''};
@@ -337,7 +344,7 @@ obj.insertPageDetailsForFL = function (pageURL, retry_count, searchTerm) {
                 that.processStatus = 1;
                 console.log('Flag reset');
                 that.logger.error('Failed to fetch details page: ' + pageURL);
-                that.logger.error(error); 
+                that.logger.error(error);
             }
             return;
         }

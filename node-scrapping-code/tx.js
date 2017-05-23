@@ -236,11 +236,54 @@ obj.searchTerms = function (data, resultCallback) {
                         }
                     }
                     var temp = {search_term: item['legal_name'], ap1: resultItem.registered_agent_name, desg1: "REGISTERED AGENT", ap2: ap2, desg2: desg2, ap3: ap3, desg3: desg3, sso_link: resultItem.sso_link, company: resultItem.title, caddress: resultItem.principal_address, match: 'YES', fetched_date: resultItem.created_at};
+
+                    that.pool.getConnection(function (err, connection) {
+
+                        if (err) {
+                            that.logger.error('connection error');
+                            that.logger.error(err);
+                        } else {
+
+                            // Use the connection 
+                            connection.query('UPDATE data SET `apname1`= ?, `designation1`= ?, `apname2`= ?, `designation2`= ?, `apname3`= ?, `designation3`= ?, `soslink`= ?, `soscompany`= ?, `sosaddress`= ?, `apname_match` =? WHERE cid = ?', [resultItem.registered_agent_name,  "REGISTERED AGENT",  ap2,  desg2,  ap3,  desg3, resultItem.sso_link, resultItem.title, resultItem.principal_address,  'YES', that.proid], function (error, results, fields) {
+
+                                // And done with the connection. 
+                                connection.release();
+                                if (error) {
+                                    that.logger.error('update error');
+                                    that.logger.error(err);
+                                } else {
+                                    console.log('** updated **');
+                                }
+                            });
+                        }
+                    });
                     //console.log(temp);
                     searchdata.push(temp);
                 } else {
                     console.log('not found');
                     var temp = {search_term: item['legal_name'], ap1: '', desg1: '', ap2: '', desg2: '', ap3: '', desg3: '', sso_link: '', company: '', caddress: '', match: 'NO', fetched_date: ''};
+                    that.pool.getConnection(function (err, connection) {
+
+                        if (err) {
+                            that.logger.error('connection error');
+                            that.logger.error(err);
+                        } else {
+
+                            // Use the connection 
+                            connection.query('UPDATE data SET `apname1`= ?, `designation1`= ?, `apname2`= ?, `designation2`= ?, `apname3`= ?, `designation3`= ?, `soslink`= ?, `soscompany`= ?, `sosaddress`= ?, `apname_match` =? WHERE cid = ?', [resultItem.registered_agent_name,  "REGISTERED AGENT",  '',  '',  '',  '', '', '', '',  'NO', that.proid], function (error, results, fields) {
+
+                                // And done with the connection. 
+                                connection.release();
+                                if (error) {
+                                    that.logger.error('update error');
+                                    that.logger.error(err);
+                                } else {
+                                    console.log('** updated **');
+                                }
+                            });
+                        }
+                    });
                     searchdata.push(temp);
                 }
 

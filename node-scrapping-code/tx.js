@@ -271,7 +271,7 @@ obj.searchTerms = function (data, resultCallback) {
                         } else {
 
                             // Use the connection 
-                            connection.query('UPDATE data SET `apname1`= ?, `designation1`= ?, `apname2`= ?, `designation2`= ?, `apname3`= ?, `designation3`= ?, `soslink`= ?, `soscompany`= ?, `sosaddress`= ?, `apname_match` =? WHERE cid = ?', [resultItem.registered_agent_name,  "REGISTERED AGENT",  '',  '',  '',  '', '', '', '',  'NO', item['cid']], function (error, results, fields) {
+                            connection.query('UPDATE data SET `apname1`= ?, `designation1`= ?, `apname2`= ?, `designation2`= ?, `apname3`= ?, `designation3`= ?, `soslink`= ?, `soscompany`= ?, `sosaddress`= ?, `apname_match` =? WHERE cid = ?', [ '',  "",  '',  '',  '',  '', '', '', '',  'NO', item['cid']], function (error, results, fields) {
 
                                 // And done with the connection. 
                                 connection.release();

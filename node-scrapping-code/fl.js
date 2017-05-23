@@ -26,8 +26,8 @@ var obj = TaxSiteFL.prototype;
 obj.createSearchTermForFL = function (proid) {
     var that = this;
     that.proid = proid;
-    that.createMatchingFile();
-    return;
+    //that.createMatchingFile();
+    //return;
     that.pool.getConnection(function (err, connection) {
 
         if (err) {
@@ -185,8 +185,8 @@ obj.createMatchingFile = function () {
         }
 
         // Use the connection 
-        
-        console.log('SELECT * FROM data where proid=' + that.proid + ' and b_state="FL"');
+
+        //console.log('SELECT * FROM data where proid=' + that.proid + ' and b_state="FL"');
         connection.query('SELECT * FROM data where proid=' + that.proid + ' and b_state="FL" ', function (err, result) {
             // And done with the connection. 
             connection.release();
@@ -250,7 +250,7 @@ obj.searchTerms = function (data, resultCallback) {
             that.logger.error(err);
         }
 
-        console.log('select * FROM site_scrap_data WHERE search_proid=' + that.proid + ' and search_state="FL" ');
+        //console.log('select * FROM site_scrap_data WHERE search_proid=' + that.proid + ' and search_state="FL" ');
         connection.query('select * FROM site_scrap_data WHERE search_proid=' + that.proid + ' and search_state="FL" ', function (err, result) {
             connection.release();
             if (err) {
@@ -268,47 +268,41 @@ obj.searchTerms = function (data, resultCallback) {
                 var searchResults = fuse.search(item['legal_name']);
                 var r = searchResults[0];
                 //console.log(searchResults);
-                console.log(r);
+                //console.log(r);
                 if (r) {
 
-                    if (r.item) {
-                        //searchResults.forEach(function (r) {
-                        //console.log(r);
-                        var resultItem = r.item;
-                        var ap2 = '';
-                        var desg2 = '';
-                        var ap3 = '';
-                        var desg3 = '';
+                    //searchResults.forEach(function (r) {
+                    //console.log(r);
+                    var resultItem = r;
+                    var ap2 = '';
+                    var desg2 = '';
+                    var ap3 = '';
+                    var desg3 = '';
 
-                        if (resultItem.authorized_persons != null) {
-                            var pd = JSON.parse(resultItem.authorized_persons);
-                            if (pd[0]) {
-                                var ap2 = pd[0]['name'];
-                                var desg2 = pd[0]['title'];
-                            }
-                            if (pd[1]) {
-                                var ap3 = pd[1]['name'];
-                                var desg3 = pd[1]['title'];
-                            }
-                        } else if (resultItem.officer_detail != null) {
-                            var pd = JSON.parse(resultItem.officer_detail);
-                            if (pd[0]) {
-                                var ap2 = pd[0]['name'];
-                                var desg2 = pd[0]['title'];
-                            }
-                            if (pd[1]) {
-                                var ap3 = pd[1]['name'];
-                                var desg3 = pd[1]['title'];
-                            }
+                    if (resultItem.authorized_persons != null) {
+                        var pd = JSON.parse(resultItem.authorized_persons);
+                        if (pd[0]) {
+                            var ap2 = pd[0]['name'];
+                            var desg2 = pd[0]['title'];
                         }
-                        var temp = {search_term: item['legal_name'], ap1: resultItem.registered_agent_name, desg1: "REGISTERED AGENT", ap2: ap2, desg2: desg2, ap3: ap3, desg3: desg3, sso_link: resultItem.sso_link, company: resultItem.title, caddress: resultItem.principal_address, match: 'YES', fetched_date: resultItem.created_at};
-                        //console.log(temp);
-                        searchdata.push(temp);
-                    } else {
-                        console.log('not found');
-                        var temp = {search_term: item['legal_name'], ap1: '', desg1: '', ap2: '', desg2: '', ap3: '', desg3: '', sso_link: '', company: '', caddress: '', match: 'NO', fetched_date: ''};
-                        searchdata.push(temp);
+                        if (pd[1]) {
+                            var ap3 = pd[1]['name'];
+                            var desg3 = pd[1]['title'];
+                        }
+                    } else if (resultItem.officer_detail != null) {
+                        var pd = JSON.parse(resultItem.officer_detail);
+                        if (pd[0]) {
+                            var ap2 = pd[0]['name'];
+                            var desg2 = pd[0]['title'];
+                        }
+                        if (pd[1]) {
+                            var ap3 = pd[1]['name'];
+                            var desg3 = pd[1]['title'];
+                        }
                     }
+                    var temp = {search_term: item['legal_name'], ap1: resultItem.registered_agent_name, desg1: "REGISTERED AGENT", ap2: ap2, desg2: desg2, ap3: ap3, desg3: desg3, sso_link: resultItem.sso_link, company: resultItem.title, caddress: resultItem.principal_address, match: 'YES', fetched_date: resultItem.created_at};
+                    //console.log(temp);
+                    searchdata.push(temp);
                 } else {
                     console.log('not found');
                     var temp = {search_term: item['legal_name'], ap1: '', desg1: '', ap2: '', desg2: '', ap3: '', desg3: '', sso_link: '', company: '', caddress: '', match: 'NO', fetched_date: ''};

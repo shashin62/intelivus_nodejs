@@ -10,6 +10,11 @@
   "license": "ISC",
   "dependencies": {
     "async": "^2.4.0",
-    "json2csv": "^3.7.3"
+    "cheerio": "^0.22.0",
+    "express": "^4.15.3",
+    "fuse.js": "^3.0.3",
+    "json2csv": "^3.7.3",
+    "mysql": "^2.13.0",
+    "winston": "^2.3.1"
   }
 }

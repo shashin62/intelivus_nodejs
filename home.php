@@ -428,7 +428,7 @@ if($_SESSION["sadmin_username"]!="")
 			}
 
 			$c=0;
-			$qy = "select * from data ".$sql." order by cid";
+			$qy = "select * from data order by cid";
 			$per_page=10;
 			$rs=mysqli_query($db,$qy) or die(mysqli_error($db)."<br>".$qy);
 			$num_rows = mysqli_num_rows($rs);

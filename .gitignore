@@ -2,3 +2,5 @@
 /export
 /node-scrapping-code/matching_files
 /pma
+/includes/connection.php
+/node-scrapping-code/config.js

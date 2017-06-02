@@ -116,7 +116,7 @@ if($_SESSION["sadmin_username"]!="")
                                 
                                 //call matching API
                                 //next example will insert new conversation
-                                $service_url = 'http://107.170.73.31:8081/start-scrap?proid='.$current_id.'&state='.$state;
+                                $service_url = 'http://localhost:8081/start-scrap?proid='.$current_id.'&state='.$state;
                                 $curl = curl_init($service_url);
                                 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
                                 $curl_response = curl_exec($curl);

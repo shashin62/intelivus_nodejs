@@ -8,6 +8,7 @@ var app = express();
 var config = require('./config');
 var TaxSiteFL = require('./fl');
 var TaxSiteTX = require('./tx');
+var TaxSiteWA = require('./wa');
 
 // Logger object
 var logger = new winston.Logger({
@@ -35,6 +36,9 @@ function configureScrapping(proid, state){
     } else if( state === 'FL'){
         var fl = new TaxSiteFL(pool, logger);
         fl.createSearchTermForFL(proid);
+    } else if( state === 'WA'){
+        var wa = new TaxSiteWA(pool, logger);
+        wa.createSearchTermForWA(proid);
     }
     
 }

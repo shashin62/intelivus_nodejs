@@ -36,8 +36,13 @@ obj.createSearchTermForWA = function (proid) {
             return;
         }
 
+        $cond = '';
+        if (that.proid == 1) {
+            $cond = ' and apname_match IS NULL';
+        }
+
         // Use the connection 
-        connection.query('SELECT * FROM data where proid=' + proid + ' and b_state="WA" ', function (err, result) {
+        connection.query('SELECT * FROM data where proid=' + proid + ' and b_state="WA" '+$cond, function (err, result) {
             // And done with the connection. 
             connection.release();
 
@@ -161,10 +166,15 @@ obj.createMatchingFile = function () {
             return;
         }
 
+        $cond= '';
+        if(that.proid==1){
+            $cond = ' and apname_match IS NULL';
+        }
+
         // Use the connection 
 
         //console.log('SELECT * FROM data where proid=' + that.proid + ' and b_state="WA"');
-        connection.query('SELECT * FROM data where proid=' + that.proid + ' and b_state="WA" ', function (err, result) {
+        connection.query('SELECT * FROM data where proid=' + that.proid + ' and b_state="WA" '+$cond, function (err, result) {
             // And done with the connection. 
             connection.release();
 

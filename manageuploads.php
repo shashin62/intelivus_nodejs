@@ -209,7 +209,8 @@ function openAttach(url)
                     </tbody>
                 </table>
                  <div id="dyntable_info" class="dataTables_info">&nbsp;<div id="dyntable_paginate" class="dataTables_paginate paging_full_numbers" style="float:left;">
-               	<a href="javascript:location.replace('uploaddata.php');" class="first paginate_button btn-primary">Add</a>
+               	<a href="javascript:location.replace('uploaddata.php');" class="first paginate_button btn-primary">Add Excel</a>
+                <a href="javascript:location.replace('uploadsingledata.php');" class="first paginate_button btn-primary">Add</a>
                 </div>
                <div class="dataTables_paginate paging_full_numbers">
                           <?php

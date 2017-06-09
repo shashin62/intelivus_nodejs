@@ -36,8 +36,13 @@ obj.createSearchTermForFL = function (proid) {
             return;
         }
 
+        $cond= '';
+        if(that.proid==1){
+            $cond = ' and apname_match IS NULL';
+        }
+
         // Use the connection 
-        connection.query('SELECT * FROM data where proid=' + proid + ' and b_state="FL" ', function (err, result) {
+        connection.query('SELECT * FROM data where proid=' + proid + ' and b_state="FL" '+$cond, function (err, result) {
             // And done with the connection. 
             connection.release();
 
@@ -185,9 +190,14 @@ obj.createMatchingFile = function () {
         }
 
         // Use the connection 
+        
+        $cond= '';
+        if(that.proid==1){
+            $cond = ' and apname_match IS NULL';
+        }
 
         //console.log('SELECT * FROM data where proid=' + that.proid + ' and b_state="FL"');
-        connection.query('SELECT * FROM data where proid=' + that.proid + ' and b_state="FL" ', function (err, result) {
+        connection.query('SELECT * FROM data where proid=' + that.proid + ' and b_state="FL" '+$cond, function (err, result) {
             // And done with the connection. 
             connection.release();
 

@@ -34,8 +34,13 @@ obj.createSearchTermForTX = function (proid) {
             return;
         }
 
+        $cond = '';
+        if (that.proid == 1) {
+            $cond = ' and apname_match IS NULL';
+        }
+
         // Use the connection 
-        connection.query('SELECT * FROM data where proid=' + proid + ' and b_state="TX" ', function (err, result) {
+        connection.query('SELECT * FROM data where proid=' + proid + ' and b_state="TX" ' + $cond, function (err, result) {
             // And done with the connection. 
             connection.release();
 
@@ -123,8 +128,13 @@ obj.createMatchingFile = function () {
             return;
         }
 
+        $cond = '';
+        if (that.proid == 1) {
+            $cond = ' and apname_match IS NULL';
+        }
+
         // Use the connection 
-        connection.query('SELECT * FROM data where proid=' + that.proid + ' and b_state="TX" ', function (err, result) {
+        connection.query('SELECT * FROM data where proid=' + that.proid + ' and b_state="TX" '+$cond, function (err, result) {
             // And done with the connection. 
             connection.release();
 
@@ -245,7 +255,7 @@ obj.searchTerms = function (data, resultCallback) {
                         } else {
 
                             // Use the connection 
-                            connection.query('UPDATE data SET `apname1`= ?, `designation1`= ?, `apname2`= ?, `designation2`= ?, `apname3`= ?, `designation3`= ?, `soslink`= ?, `soscompany`= ?, `sosaddress`= ?, `apname_match` =? WHERE cid = ?', [resultItem.registered_agent_name,  "REGISTERED AGENT",  ap2,  desg2,  ap3,  desg3, resultItem.sso_link, resultItem.title, resultItem.principal_address,  'YES', item['cid']], function (error, results, fields) {
+                            connection.query('UPDATE data SET `apname1`= ?, `designation1`= ?, `apname2`= ?, `designation2`= ?, `apname3`= ?, `designation3`= ?, `soslink`= ?, `soscompany`= ?, `sosaddress`= ?, `apname_match` =? WHERE cid = ?', [resultItem.registered_agent_name, "REGISTERED AGENT", ap2, desg2, ap3, desg3, resultItem.sso_link, resultItem.title, resultItem.principal_address, 'YES', item['cid']], function (error, results, fields) {
 
                                 // And done with the connection. 
                                 connection.release();
@@ -271,7 +281,7 @@ obj.searchTerms = function (data, resultCallback) {
                         } else {
 
                             // Use the connection 
-                            connection.query('UPDATE data SET `apname1`= ?, `designation1`= ?, `apname2`= ?, `designation2`= ?, `apname3`= ?, `designation3`= ?, `soslink`= ?, `soscompany`= ?, `sosaddress`= ?, `apname_match` =? WHERE cid = ?', [ '',  "",  '',  '',  '',  '', '', '', '',  'NO', item['cid']], function (error, results, fields) {
+                            connection.query('UPDATE data SET `apname1`= ?, `designation1`= ?, `apname2`= ?, `designation2`= ?, `apname3`= ?, `designation3`= ?, `soslink`= ?, `soscompany`= ?, `sosaddress`= ?, `apname_match` =? WHERE cid = ?', ['', "", '', '', '', '', '', '', '', 'NO', item['cid']], function (error, results, fields) {
 
                                 // And done with the connection. 
                                 connection.release();

@@ -1,9 +1,11 @@
 <?php
+//$db_username = "duns_user";
+//$db_password = "E23asdflj;ljdsf";
 $db_username = "root";
-$db_password = "";
+$db_password = "root123";
 $db_name = "duns";
 $db_host = "localhost";
-$sitepath="http://localhost/duns/";
+$sitepath="http://107.170.73.31/duns/";
 $title="Business Research Portal" ;
 set_time_limit(0);
 ini_set('display_errors', 0); 

@@ -245,7 +245,7 @@ obj.searchTerms = function (data, resultCallback) {
                 that.logger.error(err);
             }
 
-            var fuse = new Fuse(result, {keys: ["title"], include: ['score', 'matches'], threshold: 0.2});
+            var fuse = new Fuse(result, {keys: ["title"], includeScore: true, threshold: 0.2});
 
             async.each(data, function (item, callback) {
 
@@ -260,7 +260,7 @@ obj.searchTerms = function (data, resultCallback) {
 
                     //searchResults.forEach(function (r) {
                     //console.log(r);
-                    var resultItem = r;
+                    var resultItem = r.item;
                     var ap2 = '';
                     var desg2 = '';
                     var ap3 = '';
@@ -297,7 +297,7 @@ obj.searchTerms = function (data, resultCallback) {
                         } else {
 
                             // Use the connection 
-                            connection.query('UPDATE data SET `apname1`= ?, `designation1`= ?, `apname2`= ?, `designation2`= ?, `apname3`= ?, `designation3`= ?, `soslink`= ?, `soscompany`= ?, `sosaddress`= ?, `apname_match` =? WHERE cid = ?', [resultItem.registered_agent_name, "REGISTERED AGENT", ap2, desg2, ap3, desg3, resultItem.sso_link, resultItem.title, resultItem.principal_address, 'YES', item['cid']], function (error, results, fields) {
+                            connection.query('UPDATE data SET `apname1`= ?, `designation1`= ?, `apname2`= ?, `designation2`= ?, `apname3`= ?, `designation3`= ?, `soslink`= ?, `soscompany`= ?, `sosaddress`= ?, `apname_match` =?, status=3, establish=?,confmetric=? WHERE cid = ?', [resultItem.registered_agent_name,  "REGISTERED AGENT",  ap2,  desg2,  ap3,  desg3, resultItem.sso_link, resultItem.title, resultItem.principal_address, 'YES', resultItem.date_filed, r.score, item['cid']], function (error, results, fields) {
 
                                 // And done with the connection. 
                                 connection.release();
@@ -322,7 +322,7 @@ obj.searchTerms = function (data, resultCallback) {
                         } else {
 
                             // Use the connection 
-                            connection.query('UPDATE data SET `apname1`= ?, `designation1`= ?, `apname2`= ?, `designation2`= ?, `apname3`= ?, `designation3`= ?, `soslink`= ?, `soscompany`= ?, `sosaddress`= ?, `apname_match` =? WHERE cid = ?', ['', "", '', '', '', '', '', '', '', 'NO', item['cid']], function (error, results, fields) {
+                            connection.query('UPDATE data SET `apname1`= ?, `designation1`= ?, `apname2`= ?, `designation2`= ?, `apname3`= ?, `designation3`= ?, `soslink`= ?, `soscompany`= ?, `sosaddress`= ?, `apname_match` =?, status=5, establish=?,confmetric=?  WHERE cid = ?', ['',  "",  '',  '',  '',  '', '', '', '',  'NO', '', '0', item['cid']], function (error, results, fields) {
 
                                 // And done with the connection. 
                                 connection.release();

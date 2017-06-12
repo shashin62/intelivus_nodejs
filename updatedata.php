@@ -323,7 +323,21 @@ if($_SESSION["sadmin_username"]!="")
                 <p>
                 <label>Confidence :</label>
                 <span class="field">
-                <input type="text" name="confmetric" class="input-xxlarge" id="confmetric"  value="<?php echo $confmetric; ?>" />
+                <?php
+                $confidence = '';
+                if($apname_match=='YES'){
+                    $n = (float) $confmetric;
+                    
+                    if($n < 0.34){
+                        $confidence = 'HIGH';
+                    } else if($n > 0.35 && $n < 0.7){
+                        $confidence = 'MEDIUM';
+                    } else if($n > 0.7){
+                        $confidence = 'LOW';
+                    }
+                }
+                ?>
+                <input type="text" name="confmetric" class="input-xxlarge" id="confmetric"  value="<?php echo $confidence; ?>" />
                 </span> </p>
 
                 <p>

@@ -363,6 +363,8 @@ if($_SESSION["sadmin_username"]!="")
 					$typename = "Complete";
 				}else if($rtype == 4){
 					$typename = "Rejected By QA";
+				}else if($rtype == 5){
+					$typename = "No Records Found";
 				}	
 				
 			}elseif($user_qa_rights == 1){
@@ -502,7 +504,7 @@ if($_SESSION["sadmin_username"]!="")
         <th>Address</th>
         <th>City</th>
         <th>State</th>
-        <th>apname1</th>
+        <!-- <th>apname1</th>
         <th>designation1</th>
         <th>apname2</th>
         <th>designation2</th>
@@ -510,7 +512,7 @@ if($_SESSION["sadmin_username"]!="")
         <th>designation3</th>
         <th>soscompany</th>
         <th>sosaddress</th>
-        <th>apname Match</th>
+        <th>apname Match</th> -->
         <th>Status</th>
         <?php
         if($user_type_admin == "Main Rights"){
@@ -545,7 +547,9 @@ if($_SESSION["sadmin_username"]!="")
 						$stat = "Complete";
 					}elseif($row["status"]== 4){
 						$stat = "Reject By QA";
-					}
+					}else if($row["status"] == 5){
+                                                $stat = "No Records Found";
+                                        }
 				?>
       <tr class="<?php echo $cls;?>">
        
@@ -554,7 +558,7 @@ if($_SESSION["sadmin_username"]!="")
         <td><?php echo $row["b_address"]; ?></td>
         <td><?php echo $row["b_city"]; ?></td>
         <td><?php echo $row["b_state"]; ?></td>
-        <td><?php echo $row["apname1"]; ?></td>
+        <!-- <td><?php echo $row["apname1"]; ?></td>
         <td><?php echo $row["designation1"]; ?></td>
         <td><?php echo $row["apname2"]; ?></td>
         <td><?php echo $row["designation2"]; ?></td>
@@ -562,7 +566,7 @@ if($_SESSION["sadmin_username"]!="")
         <td><?php echo $row["designation3"]; ?></td>
         <td><?php echo $row["soscompany"]; ?></td>
         <td><?php echo $row["sosaddress"]; ?></td>
-        <td><?php echo $row["apname_match"]; ?></td>
+        <td><?php echo $row["apname_match"]; ?></td> -->
         <td><?php echo $stat; ?></td>
         <?php if($user_type_admin == "Main Rights"){
 			echo "<td>".$username."</td>";

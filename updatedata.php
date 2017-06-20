@@ -328,11 +328,11 @@ if($_SESSION["sadmin_username"]!="")
                 if($apname_match=='YES'){
                     $n = (float) $confmetric;
                     
-                    if($n < 0.34){
+                    if($n < 0.09){
                         $confidence = 'HIGH';
-                    } else if($n > 0.35 && $n < 0.7){
+                    } else if($n > 0.09 && $n < 0.5){
                         $confidence = 'MEDIUM';
-                    } else if($n > 0.7){
+                    } else if($n > 0.5){
                         $confidence = 'LOW';
                     }
                 }

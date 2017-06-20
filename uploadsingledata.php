@@ -34,7 +34,7 @@ if ($_SESSION["sadmin_username"] != "") {
         $address = "";
     }
 
-    $lookup = '<i class="fa fa-cloud-upload"></i> ' . $operation . ' Uploads';
+    $lookup = '<i class="fa fa-cogs"></i> SOS Engine';
     ?>
     <!DOCTYPE html>
     <html>
@@ -75,16 +75,16 @@ if ($_SESSION["sadmin_username"] != "") {
                 ?>
                     <div class="maincontentinner">
                         <div class="widget">
-                            <h4 class="widgettitle">Upload Data</h4>
+                            <h4 class="widgettitle">SOS Engine</h4>
                             <div class="widgetcontent">
                                 <form class="stdform" name="frm1" id="login" action="importsingledata.php" method="post" enctype="multipart/form-data">
                                     <input type="hidden" name="id" value="<?php echo $id; ?>" />
                                     <input type="hidden" name="opt" value="<?php echo $operation; ?>" />
-                                    <p>
+<!--                                    <p>
                                         <label>Serial</label>
                                         <span class="field">
                                             <input type="text" name="serial" class="input-xxlarge" id="dserial"  value="<?php echo $serial; ?>" />
-                                        </span> </p>
+                                        </span> </p>-->
                                     <p>
                                         <label>Legal Name</label>
                                         <span class="field">
@@ -114,12 +114,12 @@ if ($_SESSION["sadmin_username"] != "") {
                                         </span> </p>
 
                                     <p>
-                                        <label>Code</label>
+                                        <label>Zip Code</label>
                                         <span class="field">
                                             <input type="text" name="a_code" class="input-xxlarge" id="da_code"  value="<?php echo $a_code; ?>" />
                                         </span> </p>
 
-                                    <p>
+<!--                                    <p>
                                         <label>Signer</label>
                                         <span class="field">
                                             <input type="text" name="a_signer" class="input-xxlarge" id="da_signer"  value="<?php echo $a_signer; ?>" />
@@ -129,7 +129,7 @@ if ($_SESSION["sadmin_username"] != "") {
                                         <label>Weblink</label>
                                         <span class="field">
                                             <input type="text" name="weblink" class="input-xxlarge" id="dweblink"  value="<?php echo $weblink; ?>" />
-                                        </span> </p>
+                                        </span> </p>-->
 
 
 
@@ -145,9 +145,10 @@ if ($_SESSION["sadmin_username"] != "") {
                     <button name="clearbtn" type="button" onClick="javascript:clearRecord();" class="btn btn-primary">Clear Records</button>
                     </p>-->
 
-                                    <p class="stdformbutton">
-                                        <button name="submit" type="submit" class="btn btn-primary">Upload</button>
-                                        <button name="submit2" type="button"  onClick="javascript:location.replace('home.php');"  class="btn btn-primary">Cancel</button>
+                                    <p class="">
+                                        <label></label>
+                                        <button name="submit" type="submit" class="btn btn-primary">Get SOS Data</button>
+<!--                                        <button name="submit2" type="button"  onClick="javascript:location.replace('home.php');"  class="btn btn-primary">Cancel</button>-->
                                     </p>
                                 </form>
                             </div>

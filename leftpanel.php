@@ -30,6 +30,11 @@ if(strpos($_SERVER["PHP_SELF"],"manageuploads.php") || strpos($_SERVER["PHP_SELF
 {
 	$upload_page = 'class="active"';
 }
+$singleupload_page = "";
+if(strpos($_SERVER["PHP_SELF"],"uploadsingledata.php"))
+{
+	$singleupload_page = 'class="active"';
+}
 $sic_page = "";
 if(strpos($_SERVER["PHP_SELF"],"managesic.php") || strpos($_SERVER["PHP_SELF"],"addsic.php"))
 {
@@ -52,6 +57,7 @@ if(strpos($_SERVER["PHP_SELF"],"editprofile.php"))
       <li <?php echo $alloc_page; ?>><a href="manageallocation.php"> <i class="fa fa-user"></i> &nbsp; Manage Allocation</a></li>
       <?php }if($page_upload_management == 1){ ?>
       <li <?php echo $upload_page; ?>><a href="manageuploads.php"> <i class="fa fa-cloud-upload"></i> &nbsp;Manage Uploads</a></li>
+      <li <?php echo $singleupload_page; ?>><a href="uploadsingledata.php"> <i class="fa fa-cogs"></i> &nbsp;SOS Engine</a></li>
         <?php } ?>
        <li <?php echo $editprofile; ?>><a href="editprofile.php"> <i class="fa fa-user"></i> &nbsp; Edit Profile</a></li>
       <li><a href="javascript:log_out()"> <i class="fa fa-lock"></i> &nbsp; Logout</a></li>

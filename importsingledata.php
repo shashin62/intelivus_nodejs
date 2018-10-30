@@ -37,7 +37,7 @@ if ($_SESSION["sadmin_username"] != "") {
     if ($opr == "Add") {
 
         
-        $qupdate = "select * from project_data where cid= 1" ;
+        $qupdate = "select * from project_data where cid= 14" ;
         $result = mysqli_query($db, $qupdate) or die("cannot select the record..");
         $row = mysqli_fetch_assoc($result);
 

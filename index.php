@@ -15,8 +15,8 @@ if($_SESSION["sadmin_username"]!="")
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title><?php echo $title ?></title>
-<link rel="stylesheet" href="./css/style.default.css" type="text/css" />
-<link rel="stylesheet" href="./css/style.shinyblue.css" type="text/css" />
+<link rel="stylesheet" href="/var/www/html/css/style.default.css" type="text/css" />
+<link rel="stylesheet" href="/var/www/html/css/style.shinyblue.css" type="text/css" />
 
 <script type="text/javascript" src="./js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="./js/jquery-migrate-1.1.1.min.js"></script>

@@ -76,6 +76,9 @@ obj.searchByNameForFL = function (searchTerm, retryCount) {
             } else {
                 that.logger.error('Failed to search for ' + searchTerm);
                 that.logger.error(err);
+				that.searchTermIndex++;
+				searchTerm = that.termArray[that.searchTermIndex]['legal_name'];
+				that.searchByNameForFL(searchTerm, 0);
             }
 
         } else {

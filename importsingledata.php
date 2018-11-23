@@ -18,6 +18,7 @@ if ($_SESSION["sadmin_username"] != "") {
 
     $id = $_POST["id"];
     $opr = $_POST["opt"];
+    $proid = $_POST["proid"];
     $serial = '';//StringRepair($_POST['serial']);
     $legal_name = StringRepair($_POST['legal_name']);
     $dba_name = StringRepair($_POST['dba_name']);
@@ -37,7 +38,7 @@ if ($_SESSION["sadmin_username"] != "") {
     if ($opr == "Add") {
 
         
-        $qupdate = "select * from project_data where cid= 14" ;
+        $qupdate = "select * from project_data where cid= ".$proid ;
         $result = mysqli_query($db, $qupdate) or die("cannot select the record..");
         $row = mysqli_fetch_assoc($result);
 
@@ -56,7 +57,7 @@ if ($_SESSION["sadmin_username"] != "") {
 
         //call matching API
         //next example will insert new conversation
-        $service_url = 'http://localhost:8081/start-scrap?proid=' . $row['cid'] . '&state=' . $b_state;
+        $service_url = 'http://localhost:8081/start-scrap?proid=' . $row['cid' ] . '&state=' . $b_state;
         $curl = curl_init($service_url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         $curl_response = curl_exec($curl);

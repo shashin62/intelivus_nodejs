@@ -35,9 +35,9 @@ obj.createSearchTermForTX = function (proid) {
         }
 
         $cond = '';
-        if (that.proid == 1) {
+        //if (that.proid == 1) {
             $cond = ' and apname_match IS NULL';
-        }
+        //}
 
         // Use the connection 
         connection.query('SELECT * FROM data where proid=' + proid + ' and b_state="TX" ' + $cond, function (err, result) {

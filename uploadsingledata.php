@@ -79,7 +79,7 @@ if ($_SESSION["sadmin_username"] != "") {
                             <div class="widgetcontent">
                                 <form class="stdform" name="frm1" id="login" action="importsingledata.php" method="post" enctype="multipart/form-data">
                                 <p>
-                                        <label>Legal Name</label>
+                                        <label>Project</label>
                                         <span class="field">
                                             <select name="proid" class="uniformselect" >
                                                 <option value=""> - Select Project -</option>
